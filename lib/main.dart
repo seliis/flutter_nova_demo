@@ -9,7 +9,7 @@ import "package:bitsdojo_window/bitsdojo_window.dart";
 */
 
 const appTitle = "NOVA";
-const appDesc = "Nutritionist Ordering Validate Application";
+const appDesc = "Nutritionist's Ordering Visualize Application";
 
 void main() {
     runApp(
@@ -39,8 +39,8 @@ class AppRoot extends StatelessWidget {
                     color: Colors.black,
                     child: Row(
                         children: [
-                            LeftSide(),
-                            RightSide()
+                            LeftSection(),
+                            Intro()
                         ],
                     )
                 )
@@ -49,7 +49,9 @@ class AppRoot extends StatelessWidget {
     }
 }
 
-class LeftSide extends StatelessWidget {
+
+
+class LeftSection extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return SizedBox(
@@ -66,7 +68,7 @@ class LeftSide extends StatelessWidget {
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                        LoginSection()
+                                        LoginPannel()
                                     ]
                                 )
                             )
@@ -78,7 +80,7 @@ class LeftSide extends StatelessWidget {
     }
 }
 
-class RightSide extends StatelessWidget {
+class Intro extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return Expanded(
@@ -110,7 +112,47 @@ class RightSide extends StatelessWidget {
                         Expanded(
                             child: Stack(
                                 children: [
-                                    IntroSection(),
+                                    Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                            Text(
+                                                appTitle,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    letterSpacing: 8,
+                                                    color: Colors.white,
+                                                    fontFamily: "Comfortaa",
+                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: 72,
+                                                    shadows: [
+                                                        Shadow(
+                                                            color: Colors.black,
+                                                            offset: Offset(1, 1),
+                                                            blurRadius: 2
+                                                        )
+                                                    ]
+                                                ),
+                                            ),
+                                            Text(
+                                                appDesc,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white60,
+                                                    fontWeight: FontWeight.w300,
+                                                    fontFamily: "Comfortaa",
+                                                    fontSize: 20,
+                                                    shadows: [
+                                                        Shadow(
+                                                            color: Colors.black,
+                                                            offset: Offset(1, 1),
+                                                            blurRadius: 2
+                                                        )
+                                                    ]
+                                                )
+                                            )
+                                        ],
+                                    ),
                                     Positioned(
                                         right: 0,
                                         bottom: 0,
@@ -131,68 +173,7 @@ class RightSide extends StatelessWidget {
     }
 }
 
-class WindowButtons extends StatelessWidget {
-    @override
-    final btnColors = WindowButtonColors(
-        iconNormal: Colors.black,
-        mouseOver: Colors.transparent,
-        mouseDown: Colors.transparent,
-        iconMouseOver: Colors.black,
-        iconMouseDown: Colors.black
-    );
-
-    final closeBtnColors = WindowButtonColors(
-        iconNormal: Colors.pinkAccent.shade400,
-        mouseOver: Colors.transparent,
-        mouseDown: Colors.transparent,
-        iconMouseOver: Colors.pinkAccent.shade400,
-        iconMouseDown: Colors.pinkAccent.shade400
-    );
-
-    Widget build(BuildContext context) {
-        return Row(
-            children: [
-                MinimizeWindowButton(
-                    colors: btnColors,
-                ),
-                MaximizeWindowButton(
-                    colors: btnColors,
-                ),
-                CloseWindowButton(
-                    colors: closeBtnColors,
-                    onPressed: () => {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext ctxSlave) => AlertDialog(
-                                content: Text(
-                                    "어플리케이션을 종료할까요?",
-                                    style: TextStyle(
-                                        fontFamily: "Air"
-                                    ),
-                                ),
-                                actions: [
-                                    TextButton(
-                                        onPressed: () => Navigator.pop(ctxSlave),
-                                        child: Text("Cancel")
-                                    ),
-                                    TextButton(
-                                        onPressed: () => {
-                                            appWindow.close()
-                                        },
-                                        child: Text("OK")
-                                    )
-                                ],
-                            )
-                        )
-                    },
-                )
-            ],
-        );
-    }
-}
-
-// Login
-class LoginSection extends StatelessWidget {
+class LoginPannel extends StatelessWidget {
     @override
     void rejectRequest(BuildContext ctxMaster, String messageText) {
         showDialog(
@@ -265,15 +246,10 @@ class LoginSection extends StatelessWidget {
                     getField("Password", contPw, true),
                     SizedBox(height: 16),
                     ElevatedButton(
-                        child: Text(
-                            "LOGIN",
-                            style: TextStyle(
-                                fontSize: 16,
-                                letterSpacing: 8,
-                                color: Colors.black,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w500
-                            ),
+                        child: Icon(
+                            Icons.login,
+                            color: Colors.black87,
+                            size: 40
                         ),
                         onPressed: () {
                             if (contId.text == "msgfree" && contPw.text == "1234") {
@@ -306,48 +282,60 @@ class LoginSection extends StatelessWidget {
     }
 }
 
-// Intro
-class IntroSection extends StatelessWidget {
+class WindowButtons extends StatelessWidget {
     @override
+    final btnColors = WindowButtonColors(
+        iconNormal: Colors.black,
+        mouseOver: Colors.transparent,
+        mouseDown: Colors.transparent,
+        iconMouseOver: Colors.black,
+        iconMouseDown: Colors.black
+    );
+
+    final closeBtnColors = WindowButtonColors(
+        iconNormal: Colors.pinkAccent.shade400,
+        mouseOver: Colors.transparent,
+        mouseDown: Colors.transparent,
+        iconMouseOver: Colors.pinkAccent.shade400,
+        iconMouseDown: Colors.pinkAccent.shade400
+    );
+
     Widget build(BuildContext context) {
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        return Row(
             children: [
-                Text(
-                    appTitle,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        letterSpacing: 8,
-                        color: Colors.white,
-                        fontFamily: "Comfortaa",
-                        fontWeight: FontWeight.w300,
-                        fontSize: 72,
-                        shadows: [
-                            Shadow(
-                                color: Colors.black,
-                                offset: Offset(1, 1),
-                                blurRadius: 2
-                            )
-                        ]
-                    ),
+                MinimizeWindowButton(
+                    colors: btnColors,
                 ),
-                Text(
-                    appDesc,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: "Comfortaa",
-                        fontSize: 20,
-                        shadows: [
-                            Shadow(
-                                color: Colors.black,
-                                offset: Offset(1, 1),
-                                blurRadius: 2
+                MaximizeWindowButton(
+                    colors: btnColors,
+                ),
+                CloseWindowButton(
+                    colors: closeBtnColors,
+                    onPressed: () => {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext ctxSlave) => AlertDialog(
+                                content: Text(
+                                    "어플리케이션을 종료할까요?",
+                                    style: TextStyle(
+                                        fontFamily: "Air"
+                                    ),
+                                ),
+                                actions: [
+                                    TextButton(
+                                        onPressed: () => Navigator.pop(ctxSlave),
+                                        child: Text("Cancel")
+                                    ),
+                                    TextButton(
+                                        onPressed: () => {
+                                            appWindow.close()
+                                        },
+                                        child: Text("OK")
+                                    )
+                                ],
                             )
-                        ]
-                    )
+                        )
+                    },
                 )
             ],
         );
